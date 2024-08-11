@@ -15,6 +15,11 @@
     background-color: #ebf5fb;
 }
 
+.blue-button.active {
+    border-color: #3498db;
+    background-color: #ebf5fb;
+}
+
 .green-button:hover {
     border-color: #2ecc71;
     background-color: #eafaf1;

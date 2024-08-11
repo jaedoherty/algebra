@@ -1,0 +1,32 @@
+.fraction-block {
+    border-radius: 5px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.block-1 {
+    background-color: #f1948a;
+    border: 1px solid #e74c3c;
+    width: 100%;
+}
+
+.block-2 {
+    border: 1px solid #e67e22;
+    background-color: #eb984e;
+    width: 50%;
+}
+
+.block-3 {
+    border: 1px solid #f4d03f;
+    background-color: #f7dc6f;
+    width: 33%;
+}
+
+.block-4 {
+    border: 1px solid #2ecc71;
+    background-color: #58d68d;
+    width: 25%;
+}

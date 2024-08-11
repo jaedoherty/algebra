@@ -4,3 +4,7 @@
     top: calc(50% - 200px);
     list-style: none;
 }
+
+.toolbar-item {
+    display: flex;
+}
