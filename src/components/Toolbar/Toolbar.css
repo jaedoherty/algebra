@@ -1,0 +1,6 @@
+.toolbar {
+    position: absolute;
+    left: 0;
+    top: calc(50% - 200px);
+    list-style: none;
+}

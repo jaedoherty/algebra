@@ -1,4 +1,7 @@
 .App {
   text-align: center;
   height: 100vh;
+  font-family: "Kalam", cursive;
+  font-weight: 400;
+  font-style: normal;
 }
