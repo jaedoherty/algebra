@@ -1,8 +1,15 @@
-# Getting Started with Create React App
+# Algebra
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a website which provides useful tools for tutoring math.
+
+## Designs
+
+The mockups for this website are available at: 
+
+https://excalidraw.com/#json=dBVe0jR7GUAneDXAENpOT,kf40PzI8sj_SmvyLlPk7Tg
 
 ## Available Scripts
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 In the project directory, you can run:
 
