@@ -30,3 +30,45 @@
     background-color: #58d68d;
     width: 25%;
 }
+
+.block-5 {
+    border: 1px solid #2ecc71;
+    background-color: #52be80;
+    width: 20%;
+}
+
+.block-6 {
+    border: 1px solid #16a085;
+    background-color: #45b39d;
+    width: 16%;
+}
+
+.block-7 {
+    border: 1px solid #1abc9c;
+    background-color: #48c9b0;
+    width: 14%;
+}
+
+.block-8 {
+    border: 1px solid #3498db;
+    background-color: #5dade2;
+    width: 12.5%
+}
+
+.block-9 {
+    border: 1px solid #2980b9;
+    background-color: #5499c7;
+    width: 11%;
+}
+
+.block-10 {
+    border: 1px solid #8e44ad;
+    background-color: #a569bd;
+    width: 10%;
+}
+
+.block-12 {
+    border: 1px solid #9b59b6;
+    background-color: #af7ac5;
+    width: 8%;
+}

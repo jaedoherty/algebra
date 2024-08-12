@@ -8,6 +8,13 @@ const FractionBlocks = () => {
             <FractionBlock denom={2} />
             <FractionBlock denom={3} />
             <FractionBlock denom={4} />
+            <FractionBlock denom={5} />
+            <FractionBlock denom={6} />
+            <FractionBlock denom={7} />
+            <FractionBlock denom={8} />
+            <FractionBlock denom={9} />
+            <FractionBlock denom={10} />
+            <FractionBlock denom={12} />
         </div>
     )
 }
