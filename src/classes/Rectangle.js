@@ -1,3 +1,5 @@
+const SELECTION_GAP = 4
+
 class Rectangle {
   constructor(
     context,
@@ -35,11 +37,12 @@ class Rectangle {
 
   draw() {
     if (this.isSelected) {
-        this.context.beginPath()
-        this.context.roundRect(this.x - 10, this.y - 10, this.width + 20, this.height + 20, 5)
-        this.context.strokeStyle = "blue";
-        this.context.stroke();
-    } 
+      this.context.beginPath()
+      this.context.roundRect(this.x - SELECTION_GAP, this.y - SELECTION_GAP, this.width + SELECTION_GAP * 2, this.height + SELECTION_GAP * 2, 5)
+      this.context.strokeStyle = "blue";
+      this.context.stroke();
+    }
+
     // Hard code font
     this.context.font = "16px Kalam";
 
