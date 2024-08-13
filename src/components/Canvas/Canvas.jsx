@@ -22,7 +22,8 @@ const Canvas = () => {
     const [id, xOffset, yOffset] = data;
     const dropX = e.clientX - xOffset;
     const dropY = e.clientY - yOffset;
-    const denom = id[id.length - 1];
+    const idParts = id.split('-')
+    const denom = idParts[idParts.length - 1];
     const width = 200 / denom;
     const text = denom === "1" ? "1" : `1/${denom}`;
     const rectangle = new Rectangle(
@@ -67,10 +68,10 @@ const Canvas = () => {
     for (const shape of shapes.toReversed()) {
       if (shape.containsCoordinate(e.clientX, e.clientY)) {
         if (!hasSelected) {
-            shape.onClick(true);
-            hasSelected = true
+          shape.onClick(true);
+          hasSelected = true
         } else {
-            shape.onClick(false);
+          shape.onClick(false);
         }
       } else {
         shape.onClick(false);
