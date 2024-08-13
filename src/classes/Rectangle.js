@@ -47,7 +47,7 @@ class Rectangle {
     this.context.font = "16px Kalam";
 
     this.context.beginPath();
-    this.context.roundRect(this.x, this.y, this.width, this.height, 5);
+    this.context.rect(this.x, this.y, this.width, this.height);
     this.context.fillStyle = this.background;
     this.context.fill();
     this.context.strokeStyle = this.border;

@@ -1,8 +1,7 @@
 .fraction-block {
-    border-radius: 5px;
     height: 35px;
     display: flex;
-    flex-direction: column ;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
