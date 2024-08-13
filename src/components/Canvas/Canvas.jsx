@@ -22,7 +22,7 @@ const Canvas = () => {
     const [id, xOffset, yOffset] = data;
     const dropX = e.clientX - xOffset;
     const dropY = e.clientY - yOffset;
-    const idParts = id.split('-')
+    const idParts = id.split("-");
     const denom = idParts[idParts.length - 1];
     const width = 200 / denom;
     const text = denom === "1" ? "1" : `1/${denom}`;
@@ -68,21 +68,21 @@ const Canvas = () => {
         shape.draw();
         shape.drawSelection();
       }
-    })
+    });
   }, [shapes]);
 
   const redraw = () => {
     const newShapes = [...shapes];
     setShapes(newShapes);
-  }
+  };
 
   const onClick = (e) => {
-    let hasSelected = false
+    let hasSelected = false;
     for (const shape of shapes.toReversed()) {
       if (shape.containsCoordinate(e.clientX, e.clientY)) {
         if (!hasSelected) {
           shape.onClick(true);
-          hasSelected = true
+          hasSelected = true;
         } else {
           shape.onClick(false);
         }
@@ -93,6 +93,13 @@ const Canvas = () => {
     }
   };
 
+  const deleteShape = (e) => {
+    if (e.key == "Backspace") {
+      const newShapes = shapes.filter((shape) => !shape.isSelected);
+      setShapes(newShapes);
+    }
+  };
+
   return (
     <canvas
       ref={canvasRef}
@@ -100,6 +107,8 @@ const Canvas = () => {
       onDragOver={onDragOver}
       onDrop={onDrop}
       onClick={onClick}
+      onKeyDown={deleteShape}
+      tabIndex={0}
     ></canvas>
   );
 };
