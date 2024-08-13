@@ -35,14 +35,14 @@ class Rectangle {
     return x >= this.x && x <= maxX && y >= this.y && y <= maxY
   }
 
-  draw() {
-    if (this.isSelected) {
-      this.context.beginPath()
-      this.context.roundRect(this.x - SELECTION_GAP, this.y - SELECTION_GAP, this.width + SELECTION_GAP * 2, this.height + SELECTION_GAP * 2, 5)
-      this.context.strokeStyle = "blue";
-      this.context.stroke();
-    }
+  drawSelection() {
+    this.context.beginPath()
+    this.context.roundRect(this.x - SELECTION_GAP, this.y - SELECTION_GAP, this.width + SELECTION_GAP * 2, this.height + SELECTION_GAP * 2, 5)
+    this.context.strokeStyle = "blue";
+    this.context.stroke();
+  }
 
+  draw() {
     // Hard code font
     this.context.font = "16px Kalam";
 

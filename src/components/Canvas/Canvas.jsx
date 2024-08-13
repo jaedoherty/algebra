@@ -58,10 +58,23 @@ const Canvas = () => {
         canvasRef.current.clientWidth,
         canvasRef.current.clientHeight
       );
+    // Draw all the shapes
     shapes.forEach((shape) => {
       shape.draw();
     });
+    // draw selection after drawing all the shapes so that it is drawn on top of everything
+    shapes.forEach((shape) => {
+      if (shape.isSelected) {
+        shape.draw();
+        shape.drawSelection();
+      }
+    })
   }, [shapes]);
+
+  const redraw = () => {
+    const newShapes = [...shapes];
+    setShapes(newShapes);
+  }
 
   const onClick = (e) => {
     let hasSelected = false
@@ -76,8 +89,7 @@ const Canvas = () => {
       } else {
         shape.onClick(false);
       }
-      const newShapes = [...shapes];
-      setShapes(newShapes);
+      redraw();
     }
   };
 
