@@ -10,27 +10,22 @@
     width: 100px;
 }
 
-.blue-button:hover {
+.blue-button:hover, .blue-button.active {
     border-color: #3498db;
     background-color: #ebf5fb;
 }
 
-.blue-button.active {
-    border-color: #3498db;
-    background-color: #ebf5fb;
-}
-
-.green-button:hover {
+.green-button:hover, .green-button.active {
     border-color: #2ecc71;
     background-color: #eafaf1;
 }
 
-.red-button:hover {
+.red-button:hover, .red-button.active {
     border-color: #e74c3c;
     background-color: #fdedec;
 }
 
-.yellow-button:hover {
+.yellow-button:hover, .yellow-button.active {
     border-color: #f4d03f;
     background-color: #fef9e7;
 }
