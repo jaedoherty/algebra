@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import {
   blockBorderColors,
@@ -11,6 +11,45 @@ import "./Canvas.css";
 const Canvas = () => {
   const canvasRef = useRef(null);
   const [shapes, setShapes] = useState([]);
+
+  const drawShapes = useCallback(() => {
+    if (canvasRef.current) {
+      canvasRef.current
+        .getContext("2d")
+        .clearRect(
+          0,
+          0,
+          canvasRef.current.clientWidth,
+          canvasRef.current.clientHeight
+        );
+      // Draw all the shapes
+      shapes.forEach((shape) => {
+        shape.draw();
+      });
+      // draw selection after drawing all the shapes so that it is drawn on top of everything
+      shapes.forEach((shape) => {
+        if (shape.isSelected) {
+          // shape.draw();
+          shape.drawSelection();
+        }
+      });
+    }
+  }, [shapes]);
+
+  const resizeCanvas = useCallback(() => {
+    if (canvasRef.current) {
+      canvasRef.current.width = window.innerWidth;
+      canvasRef.current.height = window.innerHeight;
+    }
+    drawShapes();
+  }, [drawShapes]);
+
+  const initialize = () => {
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+  };
+
+  initialize();
 
   const onDragOver = (e) => {
     e.preventDefault();
@@ -43,33 +82,12 @@ const Canvas = () => {
 
   useEffect(() => {
     // Set up canvas
-    if (canvasRef.current) {
-      canvasRef.current.height = canvasRef.current.clientHeight;
-      canvasRef.current.width = canvasRef.current.clientWidth;
-    }
-  }, []);
+    resizeCanvas();
+  }, [resizeCanvas]);
 
   useEffect(() => {
-    canvasRef.current
-      .getContext("2d")
-      .clearRect(
-        0,
-        0,
-        canvasRef.current.clientWidth,
-        canvasRef.current.clientHeight
-      );
-    // Draw all the shapes
-    shapes.forEach((shape) => {
-      shape.draw();
-    });
-    // draw selection after drawing all the shapes so that it is drawn on top of everything
-    shapes.forEach((shape) => {
-      if (shape.isSelected) {
-        shape.draw();
-        shape.drawSelection();
-      }
-    });
-  }, [shapes]);
+    drawShapes();
+  }, [shapes, drawShapes]);
 
   const redraw = () => {
     const newShapes = [...shapes];
@@ -94,7 +112,7 @@ const Canvas = () => {
   };
 
   const deleteShape = (e) => {
-    if (e.key == "Backspace") {
+    if (e.key === "Backspace") {
       const newShapes = shapes.filter((shape) => !shape.isSelected);
       setShapes(newShapes);
     }
