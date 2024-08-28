@@ -1,5 +1,6 @@
 import ToolbarButton from "../ToolbarButton/ToolbarButton";
 import FractionBlocks from "../FractionBlocks/FractionBlocks";
+import GridMenu from "../GridMenu/GridMenu";
 import { useState } from "react";
 
 import "./Toolbar.css";
@@ -56,6 +57,7 @@ const Toolbar = (props) => {
           onClick={handleToggleGridClick}
           isActive={isToggleGridOpen}
         />
+        {isToggleGridOpen && <GridMenu setIsGridShown={props.setIsGridShown}/>}
       </li>
       <li className="toolbar-item">
         <ToolbarButton

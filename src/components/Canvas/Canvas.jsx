@@ -8,11 +8,11 @@ import Rectangle from "../../classes/Rectangle";
 
 import "./Canvas.css";
 
-const Canvas = () => {
+const Canvas = (props) => {
   const canvasRef = useRef(null);
   const [shapes, setShapes] = useState([]);
 
-  const drawShapes = useCallback(() => {
+  const clearCanvas = () => {
     if (canvasRef.current) {
       canvasRef.current
         .getContext("2d")
@@ -22,27 +22,60 @@ const Canvas = () => {
           canvasRef.current.clientWidth,
           canvasRef.current.clientHeight
         );
-      // Draw all the shapes
+    }
+  };
+
+  const drawSelection = useCallback(() => {
+    shapes.forEach((shape) => {
+      if (shape.isSelected) {
+        shape.drawSelection();
+      }
+    });
+  }, [shapes]);
+
+  const drawGrid = () => {
+    const context = canvasRef.current.getContext("2d");
+    let squareSize = 35;
+    context.beginPath();
+    context.strokeStyle = "lightgrey";
+    for (let x = 0; x < canvasRef.current.clientWidth; x += squareSize) {
+      context.moveTo(x, 0);
+      context.lineTo(x, canvasRef.current.clientHeight);
+    }
+    for (let y = 0; y < canvasRef.current.clientHeight; y += squareSize) {
+      context.moveTo(0, y);
+      context.lineTo(canvasRef.current.clientWidth, y);
+    }
+    context.stroke();
+  };
+
+  const drawShapes = useCallback(() => {
+    if (canvasRef.current) {
+      // // Draw all the shapes
       shapes.forEach((shape) => {
         shape.draw();
       });
-      // draw selection after drawing all the shapes so that it is drawn on top of everything
-      shapes.forEach((shape) => {
-        if (shape.isSelected) {
-          // shape.draw();
-          shape.drawSelection();
-        }
-      });
     }
   }, [shapes]);
+
+  const drawCanvas = useCallback(() => {
+    if (canvasRef.current) {
+      clearCanvas();
+      if (props.isGridShown) drawGrid();
+      // Draw all the shapes
+      drawShapes();
+      // draw selection after drawing all the shapes so that it is drawn on top of everything
+      drawSelection();
+    }
+  }, [drawSelection, drawShapes, props.isGridShown]);
 
   const resizeCanvas = useCallback(() => {
     if (canvasRef.current) {
       canvasRef.current.width = window.innerWidth;
       canvasRef.current.height = window.innerHeight;
     }
-    drawShapes();
-  }, [drawShapes]);
+    drawCanvas();
+  }, [drawCanvas]);
 
   const initialize = () => {
     window.addEventListener("resize", resizeCanvas);
@@ -86,13 +119,8 @@ const Canvas = () => {
   }, [resizeCanvas]);
 
   useEffect(() => {
-    drawShapes();
-  }, [shapes, drawShapes]);
-
-  const redraw = () => {
-    const newShapes = [...shapes];
-    setShapes(newShapes);
-  };
+    drawCanvas()
+  }, [props.isGridShown, drawSelection, drawShapes, drawCanvas]);
 
   const onClick = (e) => {
     let hasSelected = false;
@@ -107,7 +135,7 @@ const Canvas = () => {
       } else {
         shape.onClick(false);
       }
-      redraw();
+      drawCanvas();
     }
   };
 

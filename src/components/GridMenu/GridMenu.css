@@ -1,0 +1,28 @@
+.grid-menu {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    background: white;
+    border: 1px solid #2ecc71;
+    position: absolute;
+    left: 164px;
+    top: 111px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.grid-button {
+  background: none;
+  border: 1px solid gainsboro;
+  border-radius: 5px;
+  font-family: inherit;
+  margin-bottom: 10px;
+  cursor: pointer;
+  height: 35px;
+  font-size: 16px;
+}
+
+.grid-button:hover {
+    border-color: #2ecc71;
+    background-color: #eafaf1;
+}
