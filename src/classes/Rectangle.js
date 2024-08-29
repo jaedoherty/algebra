@@ -1,4 +1,4 @@
-const SELECTION_GAP = 4
+const SELECTION_GAP = 4;
 
 class Rectangle {
   constructor(
@@ -25,19 +25,25 @@ class Rectangle {
   }
 
   onClick(isSelected) {
-    this.isSelected = isSelected
+    this.isSelected = isSelected;
   }
 
   containsCoordinate(x, y) {
-    const maxX = this.x + this.width
-    const maxY = this.y + this.height
+    const maxX = this.x + this.width;
+    const maxY = this.y + this.height;
 
-    return x >= this.x && x <= maxX && y >= this.y && y <= maxY
+    return x >= this.x && x <= maxX && y >= this.y && y <= maxY;
   }
 
   drawSelection() {
-    this.context.beginPath()
-    this.context.roundRect(this.x - SELECTION_GAP, this.y - SELECTION_GAP, this.width + SELECTION_GAP * 2, this.height + SELECTION_GAP * 2, 5)
+    this.context.beginPath();
+    this.context.roundRect(
+      this.x - SELECTION_GAP,
+      this.y - SELECTION_GAP,
+      this.width + SELECTION_GAP * 2,
+      this.height + SELECTION_GAP * 2,
+      5
+    );
     this.context.strokeStyle = "blue";
     this.context.stroke();
   }
@@ -54,8 +60,29 @@ class Rectangle {
     this.context.stroke();
     this.context.fillStyle = "#000000";
     this.context.textAlign = this.textAlign;
-    this.context.textBaseline = "middle";
-    this.context.fillText(this.text, this.x + this.width / 2, this.y + this.height / 2 + 2);
+    if (this.text !== "1") {
+      const [num, denom] = this.text.split("/");
+      this.context.fillText(
+        num,
+        this.x + this.width / 2,
+        this.y + this.height / 2.5
+      );
+      this.context.fillText(
+        denom,
+        this.x + this.width / 2,
+        this.y + this.height / 2 + 14
+      );
+      this.context.moveTo(this.x + this.width / 2 - 6, this.y + this.height / 2 );
+      this.context.lineTo(this.x + this.width / 2 + 6, this.y + this.height / 2 );
+      this.context.strokeStyle = "black";
+      this.context.stroke();
+    } else {
+      this.context.fillText(
+        this.text,
+        this.x + this.width / 2,
+        this.y + this.height / 2 + 2
+      );
+    }
 
     // Reset fill and stroke styles
     this.context.fillStyle = "rgba(0,0,0,0)";

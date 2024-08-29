@@ -12,8 +12,11 @@ const FractionBlock = (props) => {
     const targetRect = e.target.getBoundingClientRect();
     const yOffset = e.clientY - targetRect.top;
     const xOffset = e.clientX - targetRect.left;
-    e.dataTransfer.setData("text/plain", `${e.target.id},${xOffset},${yOffset}`);
-  }
+    e.dataTransfer.setData(
+      "text/plain",
+      `${e.target.id},${xOffset},${yOffset}`
+    );
+  };
 
   return (
     <div
@@ -22,9 +25,18 @@ const FractionBlock = (props) => {
       draggable="true"
       onDragStart={onDragStart}
     >
-      {props.denom === 1
-        ? "\\begin{equation}1\\end{equation}"
-        : `\\(\\frac{1}{${props.denom}}\\)`}
+      {props.denom === 1 ? (
+        <math>
+            <mn>1</mn>
+        </math>
+      ) : (
+        <math>
+          <mfrac>
+            <mn>1</mn>
+            <mn>{props.denom}</mn>
+          </mfrac>
+        </math>
+      )}
     </div>
   );
 };
