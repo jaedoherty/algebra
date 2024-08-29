@@ -60,7 +60,9 @@ class Rectangle {
     this.context.stroke();
     this.context.fillStyle = "#000000";
     this.context.textAlign = this.textAlign;
+    this.context.closePath();
     if (this.text !== "1") {
+      this.context.beginPath();
       const [num, denom] = this.text.split("/");
       this.context.fillText(
         num,
@@ -72,16 +74,25 @@ class Rectangle {
         this.x + this.width / 2,
         this.y + this.height / 2 + 14
       );
-      this.context.moveTo(this.x + this.width / 2 - 6, this.y + this.height / 2 );
-      this.context.lineTo(this.x + this.width / 2 + 6, this.y + this.height / 2 );
+      this.context.moveTo(
+        this.x + this.width / 2 - 6,
+        this.y + this.height / 2
+      );
+      this.context.lineTo(
+        this.x + this.width / 2 + 6,
+        this.y + this.height / 2
+      );
       this.context.strokeStyle = "black";
       this.context.stroke();
+      this.context.closePath();
     } else {
+      this.context.beginPath();
       this.context.fillText(
         this.text,
         this.x + this.width / 2,
         this.y + this.height / 2 + 2
       );
+      this.context.closePath();
     }
 
     // Reset fill and stroke styles
