@@ -1,14 +1,14 @@
 .grid-menu {
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    background: white;
-    border: 1px solid #2ecc71;
-    position: absolute;
-    left: 164px;
-    top: 111px;
-    border-radius: 5px;
-    padding: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  background: rgba(234, 250, 241, 0.4);
+  border: 1px solid #2ecc71;
+  position: absolute;
+  left: 164px;
+  top: 111px;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 .grid-button {
@@ -23,6 +23,6 @@
 }
 
 .grid-button:hover {
-    border-color: #2ecc71;
-    background-color: #eafaf1;
+  border-color: #2ecc71;
+  background-color: #eafaf1;
 }

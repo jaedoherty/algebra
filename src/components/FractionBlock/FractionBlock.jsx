@@ -1,7 +1,7 @@
 import "./FractionBlock.css";
 import { useEffect } from "react";
 
-const FractionBlock = (props) => {
+const FractionBlock = ({ denom }) => {
   useEffect(() => {
     if (typeof window?.MathJax !== "undefined") {
       window.MathJax.typeset();
@@ -20,20 +20,20 @@ const FractionBlock = (props) => {
 
   return (
     <div
-      id={`fraction-block-${props.denom}`}
-      className={`fraction-block block-${props.denom}`}
+      id={`fraction-block-${denom}`}
+      className={`fraction-block block-${denom}`}
       draggable="true"
       onDragStart={onDragStart}
     >
-      {props.denom === 1 ? (
+      {denom === 1 ? (
         <math>
-            <mn>1</mn>
+          <mn>1</mn>
         </math>
       ) : (
         <math>
           <mfrac>
             <mn>1</mn>
-            <mn>{props.denom}</mn>
+            <mn>{denom}</mn>
           </mfrac>
         </math>
       )}
