@@ -1,6 +1,6 @@
 .fraction-blocks {
     width: 200px;
-    background: white;
+    background: rgba(235, 245, 251, 0.4);
     border: 1px solid #3498db;
     position: absolute;
     left: 164px;

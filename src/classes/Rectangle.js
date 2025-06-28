@@ -1,5 +1,8 @@
 const SELECTION_GAP = 4;
 
+// TODO use better IDs here
+let id = 1;
+
 class Rectangle {
   constructor(
     context,
@@ -13,8 +16,11 @@ class Rectangle {
     textAlign
   ) {
     this.context = context;
+    this.id = ++id;
     this.x = x;
     this.y = y;
+    this.dragXOffset = 0;
+    this.dragYOffset = 0;
     this.width = width;
     this.height = height;
     this.border = border;

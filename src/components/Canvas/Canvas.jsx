@@ -7,10 +7,12 @@ import {
 import Rectangle from "../../classes/Rectangle";
 
 import "./Canvas.css";
+import { getShapesAtCoord } from "./utils";
 
 const Canvas = (props) => {
   const canvasRef = useRef(null);
   const [shapes, setShapes] = useState([]);
+  const [draggingShape, setDraggingShape] = useState(null);
 
   const clearCanvas = () => {
     if (canvasRef.current) {
@@ -89,6 +91,41 @@ const Canvas = (props) => {
     e.dataTransfer.dropEffect = "move";
   };
 
+  const handleMouseDown = (e) => {
+    const matchingShapes = getShapesAtCoord(shapes, e.clientX, e.clientY);
+    if (matchingShapes.length === 0) return;
+
+    const shapeToDrag = matchingShapes[0];
+    shapeToDrag.dragXOffset = e.clientX - shapeToDrag.x;
+    shapeToDrag.dragYOffset = e.clientY - shapeToDrag.y;
+
+    setDraggingShape(matchingShapes[0] || null);
+    // Promote the dragged shape to the top layer
+    setShapes([...shapes.filter(shape => shape.id !== matchingShapes[0].id), matchingShapes[0]]);
+  }
+
+  const handleMouseMove = (e) => {
+    if (draggingShape) {
+      setShapes((prevShapes) => {
+        return prevShapes.map((shape) => {
+          if (shape === draggingShape) {
+            shape.x = e.clientX - shape.dragXOffset;
+            shape.y = e.clientY - shape.dragYOffset;
+          }
+          return shape;
+        });
+      })
+    }
+  }
+
+  const handleMouseUp = () => {
+    if (draggingShape) {
+      draggingShape.dragXOffset = 0;
+      draggingShape.dragYOffset = 0;
+      setDraggingShape(null)
+    }
+  }
+
   const onDrop = (e) => {
     const data = e.dataTransfer.getData("text/plain")?.split(",");
     const [id, xOffset, yOffset] = data;
@@ -152,10 +189,13 @@ const Canvas = (props) => {
       id="canvas"
       onDragOver={onDragOver}
       onDrop={onDrop}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
       onClick={onClick}
       onKeyDown={deleteShape}
       tabIndex={0}
-    ></canvas>
+    />
   );
 };
 
