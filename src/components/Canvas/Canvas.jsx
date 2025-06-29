@@ -7,7 +7,7 @@ import {
 import Rectangle from "../../classes/Rectangle";
 
 import "./Canvas.css";
-import { getShapesAtCoord } from "./utils";
+import { containsCoordinate, getShapesAtCoord } from "./utils";
 
 const Canvas = (props) => {
   const canvasRef = useRef(null);
@@ -34,6 +34,22 @@ const Canvas = (props) => {
       }
     });
   }, [shapes]);
+
+  const drawTrashCan = useCallback(() => {
+    if (draggingShape) {
+      const context = canvasRef.current.getContext("2d");
+      const trashCanX = canvasRef.current.clientWidth - 55;
+      const trashCanY = canvasRef.current.clientHeight - 20;
+      context.font = "64px Arial";
+      context.fillStyle = "white";
+      // TODO: improve collision detection
+      if (containsCoordinate(draggingShape, trashCanX, trashCanY)) {
+        context.fillText("❌", trashCanX, trashCanY);
+      } else {
+        context.fillText("🗑️", trashCanX, trashCanY);
+      }
+    }
+  }, [draggingShape])
 
   const drawGrid = () => {
     const context = canvasRef.current.getContext("2d");
@@ -63,28 +79,33 @@ const Canvas = (props) => {
   const drawCanvas = useCallback(() => {
     if (canvasRef.current) {
       clearCanvas();
-      if (props.isGridShown) drawGrid();
+      if (props.showGrid) drawGrid();
       // Draw all the shapes
       drawShapes();
       // draw selection after drawing all the shapes so that it is drawn on top of everything
       drawSelection();
+      // draw the delete trash can
+      drawTrashCan();
     }
-  }, [drawSelection, drawShapes, props.isGridShown]);
+  }, [drawSelection, drawShapes, drawTrashCan, props.showGrid]);
 
   const resizeCanvas = useCallback(() => {
     if (canvasRef.current) {
+      console.log("Resizing canvas to full window size", window);
       canvasRef.current.width = window.innerWidth;
-      canvasRef.current.height = window.innerHeight;
+      canvasRef.current.height = window.innerHeight - 9; // don't know why 9 is needed here but it removes the vertical scroll bar
     }
     drawCanvas();
   }, [drawCanvas]);
 
-  const initialize = () => {
-    window.addEventListener("resize", resizeCanvas);
+  useEffect(() => {
     resizeCanvas();
-  };
-
-  initialize();
+    window.addEventListener("resize", resizeCanvas);
+    return () => {
+      window.removeEventListener("resize", resizeCanvas);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const onDragOver = (e) => {
     e.preventDefault();
@@ -93,6 +114,9 @@ const Canvas = (props) => {
 
   const handleMouseDown = (e) => {
     const matchingShapes = getShapesAtCoord(shapes, e.clientX, e.clientY);
+    console.log(
+      `Found ${matchingShapes.length} shapes at (${e.clientX}, ${e.clientY})`
+    )
     if (matchingShapes.length === 0) return;
 
     const shapeToDrag = matchingShapes[0];
@@ -120,6 +144,10 @@ const Canvas = (props) => {
 
   const handleMouseUp = () => {
     if (draggingShape) {
+      if (containsCoordinate(draggingShape, canvasRef.current.clientWidth - 55, canvasRef.current.clientHeight - 20)) {
+        // If the shape is dropped on the trash can, remove it
+        setShapes((prevShapes) => prevShapes.filter(shape => shape.id !== draggingShape.id));
+      }
       draggingShape.dragXOffset = 0;
       draggingShape.dragYOffset = 0;
       setDraggingShape(null)
@@ -157,7 +185,7 @@ const Canvas = (props) => {
 
   useEffect(() => {
     drawCanvas()
-  }, [props.isGridShown, drawSelection, drawShapes, drawCanvas]);
+  }, [props.showGrid, drawSelection, drawShapes, drawCanvas]);
 
   const onClick = (e) => {
     let hasSelected = false;

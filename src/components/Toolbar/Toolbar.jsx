@@ -57,7 +57,7 @@ const Toolbar = (props) => {
           onClick={handleToggleGridClick}
           isActive={isToggleGridOpen}
         />
-        {isToggleGridOpen && <GridMenu setIsGridShown={props.setIsGridShown}/>}
+        {isToggleGridOpen && <GridMenu setShowGrid={props.setShowGrid} />}
       </li>
       <li className="toolbar-item">
         <ToolbarButton

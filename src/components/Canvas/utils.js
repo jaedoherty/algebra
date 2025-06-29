@@ -7,3 +7,10 @@ export const getShapesAtCoord = (shapes, x, y) => {
     }
     return result;
 }
+
+export const containsCoordinate = (shape, x, y) => {
+    const maxX = shape.x + shape.width;
+    const maxY = shape.y + shape.height;
+
+    return x >= shape.x && x <= maxX && y >= shape.y && y <= maxY;
+}

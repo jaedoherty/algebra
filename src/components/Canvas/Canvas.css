@@ -1,4 +1,6 @@
 canvas {
     font-size: 18px;
     font-family: inherit;
+    overflow: hidden;
+    width: 100%;
 }
