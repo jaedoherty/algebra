@@ -5,11 +5,11 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [isGridShown, setIsGridShown] = useState(false);
+  const [showGrid, setShowGrid] = useState(false);
   return (
     <div className="App">
-      <Toolbar setIsGridShown={setIsGridShown} />
-      <Canvas isGridShown={isGridShown} />
+      <Toolbar setShowGrid={setShowGrid} />
+      <Canvas showGrid={showGrid} />
     </div>
   );
 }
